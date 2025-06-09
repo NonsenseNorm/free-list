@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define ALLOCATION_LIMIT
 #define CAPACITY 10
 #define FAILD -1
 #define SUCCEED 1
@@ -22,6 +21,10 @@ typedef struct {
 Vector*	init_vector(size_t sizeof_data);
 void	cleanup(Vector* v);
 int		append(Vector* v, const void* data);
+//配列は0から始まるので2としたら3番目
 void*	get_element(Vector* v, size_t i);
 
+
+//C言語ではテンプレート型などがないので型がわからないものにも対応するにはvoid*を受け取る
+//そしてappendの第2引数がconst void* dataとなっているのも型がわからないのでデータを値渡しできないから
 #endif
