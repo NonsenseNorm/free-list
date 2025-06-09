@@ -6,7 +6,7 @@
 #include <string.h>
 
 #define ALLOCATION_LIMIT
-#define CAPACITY 200
+#define CAPACITY 10
 #define FAILD -1
 #define SUCCEED 1
 
@@ -19,7 +19,7 @@ typedef struct {
 	size_t	capacity;
 }	Vector;
 
-Vector*	init_vector(size_t sizeof_data, size_t CAPACITY);
+Vector*	init_vector(size_t sizeof_data);
 void	cleanup(Vector* v);
 int		append(Vector* v, const void* data);
 void*	get_element(Vector* v, size_t i);
