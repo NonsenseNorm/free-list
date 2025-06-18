@@ -5,9 +5,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define CAPACITY 10
-#define FAILD -1
-#define SUCCEED 1
+#define CAPACITY 10 // 0とか負の数とかの時弾くようにしたい
+
+typedef enum {
+	SUCCEED, 
+	FAILD,
+}	STATUS;
 
 typedef struct s_block {
 	struct s_block*	next;
@@ -17,14 +20,13 @@ typedef struct s_block {
 
 typedef struct s_vector {
 	Block* 	sentinel;
-	int		(*get_element)(const struct s_vector* vector, size_t i);
 	size_t	used;
 	size_t	capacity;
+	int		(*get_element)(const struct s_vector* vector, size_t i);
+	STATUS	(*append)(struct s_vector* vector, int data);
+	void	(*pop)(struct s_vector* vector);
 }	Vector;
 
 Vector*	init_vector();
-void	cleanup(Vector* vector);
-int		append(Vector* vector,int data);
-int		get_element(const Vector* vector, size_t i);
 
 #endif

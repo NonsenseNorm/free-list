@@ -1,47 +1,79 @@
 #include "vector.h"
 
-static int	get_element(const Vector* vector, size_t i)
+static
+int	get_element(const Vector* vector, size_t i)
 {
-	return 0;
+	Block*	current;
+	int		block_number;
+
+	current = vector->sentinel->next;
+	block_number = i / CAPACITY;
+	while(current != vector->sentinel)
+	{
+		current = current->next;
+		block_number--;
+	}
+
+	return current->array[i / CAPACITY];
 }
 
-
-static STATUS	resize(Vector*	vector)
+static
+STATUS	resize(Vector*	vector)
 {
-	STAUTS	status;
 	Block*	current;
 	Block*	new_block;
 
-	current = vector->sentinel.next;
-	while(current != sentinel)
+	current = vector->sentinel->next;
+	while(current != vector->sentinel)
 		current = current->next;
 	
 	new_block = malloc(sizeof(Block));
 	if (!new_block)
-		reuturn FAILD;
+		return FAILD;
+
 	current->next = new_block;
-	new_block->next = sentinel;
+	new_block->next = vector->sentinel;
 	new_block->prev = current;
 
 	vector->capacity += CAPACITY;
 
-staitc STATUS	append(Vector* vector, int data)
+	return SUCCEED;
+}
+
+static
+STATUS	append(Vector* vector, int data)
 {
 	STATUS	status;
+	Block* current;
 
-	if (vector->used >= vector->capacity) {
+	current = vector->sentinel->next;
+	while(current != vector->sentinel)
+		current = current->next;
+
+	if (vector->used >= vector->capacity)
+	{
 		status = resize(vector);
 		if (status == SUCCEED)
 		{
-			
+			current->array[0] = data;
+			vector->used++;
 		}
-	block = malloc(sizeof(Block));
-	if (!block)
-		return (status = FAILD, status);
-
+		else
+			return FAILD;
+	}
+	else
+	{
+		current->array[vector->used + 1] = data;
+		vector->used++;
+	}
+	return SUCCEED;
+}
 	
-static STATUS	pop(Vector* vector)
+static
+void	pop(Vector* vector)
 {
+	vector->used--;
+}
 
 Vector*	init_vector()
 {
@@ -54,13 +86,16 @@ Vector*	init_vector()
 	sentinel->prev = sentinel;
 
 	vector = malloc(sizeof(Vector));
-	if (!vector) {
+	if (!vector)
+	{
 		free(sentinel);
 		return NULL;
 	}
 	*vector = (Vector){
 		.sentinel = sentinel,
 		.get_element = &get_element,
+		.append = &append,
+		.pop = &pop,
 		.used = 0,
 		.capacity = CAPACITY,
 	};
