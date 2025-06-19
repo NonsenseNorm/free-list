@@ -28,6 +28,6 @@ typedef struct s_vector {
 }	Vector;
 
 Vector*	init_vector();
-Vector*	dispose_vector();
+void*	dispose_vector(Vector* vector);
 
 #endif

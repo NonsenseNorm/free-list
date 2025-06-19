@@ -17,7 +17,7 @@ int	get_element(const Vector* vector, size_t i)
 	return current->array[i % CAPACITY];
 }
 
-void	dispose(Vector* vector)
+void*	dispose_vector(Vector* vector)
 {
 	Block*	current;
 
@@ -29,6 +29,8 @@ void	dispose(Vector* vector)
 	}
 	free(vector->sentinel);
 	free(vector);
+
+	return (vector = NULL, (void*)vector);
 }
 
 static
