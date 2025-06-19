@@ -14,7 +14,21 @@ int	get_element(const Vector* vector, size_t i)
 		block_number--;
 	}
 
-	return current->array[i / CAPACITY];
+	return current->array[i % CAPACITY];
+}
+
+void	dispose(Vector* vector)
+{
+	Block*	current;
+
+	current = vector->sentinel->next;
+	while(current != vector->sentinel)
+	{
+		current = current->next;
+		free(current->prev);
+	}
+	free(vector->sentinel);
+	free(vector);
 }
 
 static
