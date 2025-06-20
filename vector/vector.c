@@ -8,7 +8,7 @@ int	get_element(const Vector* vector, size_t i)
 
 	current = vector->sentinel->next;
 	block_number = i / CAPACITY;
-	while(current != vector->sentinel)
+	while(block_number && current != vector->sentinel)
 	{
 		current = current->next;
 		block_number--;

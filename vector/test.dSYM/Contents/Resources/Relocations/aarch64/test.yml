@@ -1,0 +1,14 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     test
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003A84, symSize: 0xB8 }
+  - { offsetInCU: 0x5D, offset: 0x5D, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003A84, symSize: 0xB8 }
+  - { offsetInCU: 0x26, offset: 0x1DC, size: 0x8, addend: 0x0, symName: _dispose_vector, symObjAddr: 0x0, symBinAddr: 0x100003B3C, symSize: 0x84 }
+  - { offsetInCU: 0x50, offset: 0x206, size: 0x8, addend: 0x0, symName: _dispose_vector, symObjAddr: 0x0, symBinAddr: 0x100003B3C, symSize: 0x84 }
+  - { offsetInCU: 0x86, offset: 0x23C, size: 0x8, addend: 0x0, symName: _init_vector, symObjAddr: 0x84, symBinAddr: 0x100003BC0, symSize: 0xE0 }
+  - { offsetInCU: 0xBC, offset: 0x272, size: 0x8, addend: 0x0, symName: _get_element, symObjAddr: 0x164, symBinAddr: 0x100003CA0, symSize: 0xB8 }
+  - { offsetInCU: 0x10E, offset: 0x2C4, size: 0x8, addend: 0x0, symName: _append, symObjAddr: 0x21C, symBinAddr: 0x100003D58, symSize: 0x10C }
+  - { offsetInCU: 0x160, offset: 0x316, size: 0x8, addend: 0x0, symName: _pop, symObjAddr: 0x328, symBinAddr: 0x100003E64, symSize: 0x20 }
+  - { offsetInCU: 0x184, offset: 0x33A, size: 0x8, addend: 0x0, symName: _resize, symObjAddr: 0x348, symBinAddr: 0x100003E84, symSize: 0xCC }
+...
