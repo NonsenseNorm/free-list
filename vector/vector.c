@@ -60,11 +60,17 @@ static
 STATUS	append(Vector* vector, int data)
 {
 	STATUS	status;
-	Block* current;
+	Block*	current;
+	int		block_counter;
+	size_t	i;
 
 	current = vector->sentinel->next;
+	block_counter = 0;
 	while(current != vector->sentinel)
+	{
 		current = current->next;
+		block_counter++;
+	}
 
 	if (vector->used >= vector->capacity)
 	{
@@ -75,16 +81,24 @@ STATUS	append(Vector* vector, int data)
 			vector->used++;
 		}
 		else
+		{
+			printf("faild in append() with resize()");
 			return FAILD;
+		}
 	}
 	else
 	{
-		current->array[vector->used + 1] = data;
+		i = vector->used - (block_counter - 1)*CAPACITY;
+		current->array[i] = data;
 		vector->used++;
 	}
+
+	printf("vecotr->used: %d, current: %p\n", vector->used, current);
+	printf("vector->used - (block_counter - 1)*CAPACITY: %d\n", i);
+	printf("array[i] = %c\n", (char)current->array[vector->used - 1]);
 	return SUCCEED;
 }
-	
+
 static
 void	pop(Vector* vector)
 {
@@ -115,6 +129,19 @@ Vector*	init_vector()
 		.used = 0,
 		.capacity = CAPACITY,
 	};
+
+	printf("\n---------------in init_vector()-------------------\n");
+	printf("vector: %p\n", vector);
+	printf("sentinel.next: %p\n", sentinel->next);
+	printf("sentinel.prev: %p\n", sentinel->prev);
+	printf("----------------------end---------------------------\n");
+
+	resize(vector);
+	printf("\n----after calling resize for create first block-----\n");
+	printf("vector: %p\n", vector);
+	printf("sentinel.next: %p\n", sentinel->next);
+	printf("sentinel.prev: %p\n", sentinel->prev);
+	printf("----------------------end---------------------------\n");
 
 	return vector;
 }
