@@ -2,7 +2,7 @@ typedef unsigned char byte;
 
 typedef struct s_block {
 	byte*			head;
-	ssize_t			size;
+	ssize_t			size;//sizeというよりtotal_size
 	struct s_block*	next;
 	struct s_block*	previous;
 }	Block;
@@ -69,9 +69,9 @@ enum status		add_block(VirtualArray* v)
 	
 	*(v->sentinel) = (Block) {
 		.head = array;
-		.size = CAPACITY;
+		.size = CAPACITY + current->previous->size + 0;
 		.next = v->sentinel;
-		.previous = v->///ここsentinelじゃない
+		.previous = current->previous;
 
 	}
 
