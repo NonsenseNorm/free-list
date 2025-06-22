@@ -1,4 +1,15 @@
+#include <stddef.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+#define CAPACITY 200
 typedef unsigned char byte;
+
+enum status {
+	ALLOCATING_NEW_FAILED,
+	ALLOCATING_ARRAY_FAILED,
+	SUCCEED,
+};
 
 typedef struct s_block {
 	byte*			head;
@@ -12,7 +23,7 @@ typedef struct {
 }	VirtualArray;
 
 VirtualArray*			create_virtual_array();
-enum static				dispose_vitual_array(VirtualArray* v);
+static enum status		dispose_vitual_array(VirtualArray* v);
 byte*					virtual_array(VirtualArray* v, size_t i);
 
 static enum status		add_block(VirtualArray* v, Block* block);//より処理を一般化し一つの関数内での場合分けを防ぐ
@@ -26,7 +37,7 @@ VirtualArray*	create_virtual_array()
 	if (!sentinel)
 		return NULL;
 	v = malloc(sizeof(VirtualArray));
-	if (!VirtualArray)
+	if (!v)
 	{
 		free(sentinel);
 		return NULL;
@@ -56,22 +67,22 @@ enum status		add_block(VirtualArray* v, Block* block)
 
 	new = malloc(sizeof(Block));
 	if (!new)
-		return NEW_MALLOC_FAILD;
+		return ALLOCATING_NEW_FAILED;
 	array = malloc(CAPACITY);
 	if (!array)
 	{
 		free(new);
-		return ARRAY_MALLOC_FAILD;
+		return ALLOCATING_ARRAY_FAILED;
 	}
 
 	block->next = new;
-	*(block->next).previous = new;
+	block->next->previous = new;
 	*(new) = (Block) {
 		.head = array,
 		.size = block->capacity + CAPACITY,
 		.next = block->next,
 		.previous = block,
-	}
+	};
 
 	return SUCCEED;
 }
