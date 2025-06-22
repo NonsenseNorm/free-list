@@ -26,7 +26,7 @@ VirtualArray*			create_virtual_array();
 static enum status		dispose_vitual_array(VirtualArray* v);
 byte*					virtual_array(VirtualArray* v, size_t i);
 
-static enum status		add_block(VirtualArray* v, Block* block);//より処理を一般化し一つの関数内での場合分けを防ぐ
+static enum status		add_block(VirtualArray* v, Block* block);
 static enum status		remove_block(VirtualArray* v, Block* block);
 
 VirtualArray*	create_virtual_array()
