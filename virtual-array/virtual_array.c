@@ -34,18 +34,16 @@ enum status dispose_virtual_array(VirtualArray* v);
 byte* virtual_array(VirtualArray* v, size_t i);
 
 static enum status insert_block(VirtualArray* v, Block* previous_block);
-static enum status remove_block(VirtualArray* v, Block* block_to_remove);
+enum status remove_block(VirtualArray* v, Block* block_to_remove);
 
 VirtualArray* create_virtual_array()
 {
-	VirtualArray* v;
 	Block *const sentinel = malloc(sizeof(Block));
-
 	if (!sentinel)
 	{
 		return NULL;
 	}
-	v = malloc(sizeof(VirtualArray));
+	VirtualArray* v = malloc(sizeof(VirtualArray));
 	if (!v)
 	{
 		free(sentinel);
@@ -67,7 +65,7 @@ VirtualArray* create_virtual_array()
 
 	if (insert_block(v, v->sentinel) != SUCCEED)
 	{
-		dispose_virtual_array(v);
+		/*dispose_virtual_array(v);*/
 		return NULL;
 	}
 
