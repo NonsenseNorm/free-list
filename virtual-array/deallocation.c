@@ -17,11 +17,12 @@ void	dealloc_blocks_except_sentinel(VirtualArray* v)
 	if (!v)
 		return;
 
-	Block*	sentinel = v->sentinel;
-	if (sentinel->next == sentinel->previous)
+	//This is not necessary, but having this makes much easier to follow the flow.
+	if (v->sentinel->next == v->sentinel->previous)
 		return;
 
-	Block*	current = v->sentinel->next;
+	Block*	sentinel = v->sentinel;
+	Block*	current = sentinel->next;
 	Block*	next;
 	while (current != sentinel)
 	{
@@ -30,6 +31,9 @@ void	dealloc_blocks_except_sentinel(VirtualArray* v)
 		free(current);
 		current = next;
 	}
+
+	sentinel->next = sentinel;
+	sentinel->previous = sentinel;
 
 	return;
 }
