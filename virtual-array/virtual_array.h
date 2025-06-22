@@ -33,7 +33,7 @@ typedef struct
 } VirtualArray;
 
 VirtualArray* create_virtual_array();
-enum status dispose_virtual_array(VirtualArray* v);
+VirtualArray* dispose_virtual_array(VirtualArray* v);
 byte* virtual_array(VirtualArray* v, size_t i);
 
 #endif

@@ -1,7 +1,4 @@
-#include "virtual_array.h"
-
-static enum status insert_block(VirtualArray* v, Block* previous_block);
-enum status remove_block(VirtualArray* v, Block* block_to_remove);
+#include "_virtual_array.h"
 
 VirtualArray* create_virtual_array()
 {
@@ -32,7 +29,7 @@ VirtualArray* create_virtual_array()
 
 	if (insert_block(v, v->sentinel) != SUCCEED)
 	{
-		/*dispose_virtual_array(v);*/
+		dispose_virtual_array(v);
 		return NULL;
 	}
 
@@ -68,9 +65,16 @@ enum status dispose_virtual_array(VirtualArray* v)
 
 byte* virtual_array(VirtualArray* v, size_t i)
 {
-	if (!v || i >= v->total_capacity)
-	{
+	if (!v)
 		return NULL;
+
+	if (i >= v->total_capacity)
+	{
+		if (insert_block(v, v->sentinel) != SUCCEED)
+		{
+			dispose_virtual_array(v);
+			return NULL;
+		}
 	}
 
 	Block* current = v->sentinel->next;
@@ -88,7 +92,7 @@ byte* virtual_array(VirtualArray* v, size_t i)
 	return NULL;
 }
 
-static
+//The new block will inserted right after the position.
 enum status insert_block(VirtualArray* v, Block* position)
 {
 	Block* new_block = malloc(sizeof(Block));
