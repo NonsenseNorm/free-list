@@ -5,37 +5,46 @@
 #define CAPACITY 200
 typedef unsigned char byte;
 
-enum status {
+enum status
+{
 	ALLOCATING_NEW_FAILED,
 	ALLOCATING_ARRAY_FAILED,
 	SUCCEED,
+	INVALID_INDEX,
+	INVALID_BLOCK_TO_REMOVE,
+	REMOVE_FAILED,
 };
 
-typedef struct s_block {
-	byte*			head;
-	size_t			size;//sizeというよりtotal_size
-	struct s_block*	next;
-	struct s_block*	previous;
-}	Block;
-
-typedef struct {
-	Block*	sentinel;
-}	VirtualArray;
-
-VirtualArray*			create_virtual_array();
-static enum status		dispose_vitual_array(VirtualArray* v);
-byte*					virtual_array(VirtualArray* v, size_t i);
-
-static enum status		add_block(VirtualArray* v, Block* block);
-static enum status		remove_block(VirtualArray* v, Block* block);
-
-VirtualArray*	create_virtual_array()
+typedef struct s_block
 {
-	VirtualArray*	v;
-	Block *const	sentinel = malloc(sizeof(Block));
+	byte* head;
+	size_t size;
+	struct s_block* next;
+	struct s_block* previous;
+} Block;
+
+typedef struct
+{
+	Block* sentinel;
+	size_t total_capacity;
+} VirtualArray;
+
+VirtualArray* create_virtual_array();
+enum status dispose_virtual_array(VirtualArray* v);
+byte* virtual_array(VirtualArray* v, size_t i);
+
+static enum status insert_block(VirtualArray* v, Block* previous_block);
+static enum status remove_block(VirtualArray* v, Block* block_to_remove);
+
+VirtualArray* create_virtual_array()
+{
+	VirtualArray* v;
+	Block *const sentinel = malloc(sizeof(Block));
 
 	if (!sentinel)
+	{
 		return NULL;
+	}
 	v = malloc(sizeof(VirtualArray));
 	if (!v)
 	{
@@ -43,48 +52,128 @@ VirtualArray*	create_virtual_array()
 		return NULL;
 	}
 
-	*sentinel = (Block) {
+	*sentinel = (Block)
+	{
 		.head = NULL,
 		.size = 0,
 		.next = sentinel,
 		.previous = sentinel,
-	}
-	*v = (VirtualArray) {
+	};
+	*v = (VirtualArray)
+	{
 		.sentinel = sentinel,
-	}
+		.total_capacity = 0,
+	};
 
-	add_block(v, v->sentinel->previous);
+	if (insert_block(v, v->sentinel) != SUCCEED)
+	{
+		dispose_virtual_array(v);
+		return NULL;
+	}
 
 	return v;
 }
 
-static
-enum status		add_block(VirtualArray* v, Block* block)
+/*
+enum status dispose_virtual_array(VirtualArray* v)
 {
-	Block*	current = v->sentinel->next;
-	Block*	new;
-	byte*	array;
+	if (!v)
+	{
+		return REMOVE_FAILED;
+	}
 
-	new = malloc(sizeof(Block));
-	if (!new)
+	Block* current = v->sentinel->next;
+	while (current != v->sentinel)
+	{
+		Block* next_block = current->next;
+		if (remove_block(v, current) != SUCCEED)
+		{
+			// エラーハンドリングが必要であればここに記述
+			// 例えば、部分的に解放された状態で関数を終了するか、エラーを返すか
+			return REMOVE_FAILED;
+		}
+		current = next_block;
+	}
+
+	free(v->sentinel);
+	free(v);
+	return SUCCEED;
+}
+*/
+
+/*
+byte* virtual_array(VirtualArray* v, size_t i)
+{
+	if (!v || i >= v->total_capacity)
+	{
+		return NULL;
+	}
+
+	Block* current = v->sentinel->next;
+	size_t current_offset = 0;
+
+	while (current != v->sentinel)
+	{
+		if (i < current_offset + current->size)
+		{
+			return current->head + (i - current_offset);
+		}
+		current_offset += current->size;
+		current = current->next;
+	}
+	return NULL;
+}
+*/
+
+static
+enum status insert_block(VirtualArray* v, Block* previous_block)
+{
+	Block* new_block = malloc(sizeof(Block));
+	if (!new_block)
+	{
 		return ALLOCATING_NEW_FAILED;
-	array = malloc(CAPACITY);
+	}
+
+	byte* array = malloc(CAPACITY);
 	if (!array)
 	{
-		free(new);
+		free(new_block);
 		return ALLOCATING_ARRAY_FAILED;
 	}
 
-	block->next = new;
-	block->next->previous = new;
-	*(new) = (Block) {
+	*new_block = (Block)
+	{
 		.head = array,
-		.size = block->capacity + CAPACITY,
-		.next = block->next,
-		.previous = block,
+		.size = CAPACITY,
+		.next = previous_block->next,
+		.previous = previous_block,
 	};
+
+	previous_block->next->previous = new_block;
+	previous_block->next = new_block;
+
+	v->total_capacity += CAPACITY;
 
 	return SUCCEED;
 }
 
+/*
+static
+enum status remove_block(VirtualArray* v, Block* block_to_remove)
+{
+	if (!v || !block_to_remove || block_to_remove == v->sentinel)
+	{
+		return INVALID_BLOCK_TO_REMOVE;
+	}
 
+	block_to_remove->previous->next = block_to_remove->next;
+	block_to_remove->next->previous = block_to_remove->previous;
+
+	free(block_to_remove->head);
+	free(block_to_remove);
+
+	v->total_capacity -= CAPACITY;
+
+	return SUCCEED;
+}
+*/
