@@ -89,7 +89,7 @@ byte* virtual_array(VirtualArray* v, size_t i)
 }
 
 static
-enum status insert_block(VirtualArray* v, Block* previous_block)
+enum status insert_block(VirtualArray* v, Block* position)
 {
 	Block* new_block = malloc(sizeof(Block));
 	if (!new_block)
@@ -108,12 +108,12 @@ enum status insert_block(VirtualArray* v, Block* previous_block)
 	{
 		.head = array,
 		.size = CAPACITY,
-		.next = previous_block->next,
-		.previous = previous_block,
+		.next = position->next,
+		.previous = position,
 	};
 
-	previous_block->next->previous = new_block;
-	previous_block->next = new_block;
+	position->next->previous = new_block;
+	position->next = new_block;
 
 	v->total_capacity += CAPACITY;
 
