@@ -29,6 +29,7 @@ typedef struct s_block
 typedef struct
 {
 	Block* sentinel;
+	size_t block_size;
 	size_t total_capacity;
 } VirtualArray;
 

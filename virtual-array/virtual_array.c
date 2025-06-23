@@ -1,6 +1,6 @@
 #include "_virtual_array.h"
 
-VirtualArray* create_virtual_array()
+VirtualArray* create_virtual_array(size_t block_size)
 {
 	Block *const sentinel = malloc(sizeof(Block));
 	if (!sentinel)
@@ -21,9 +21,12 @@ VirtualArray* create_virtual_array()
 		.next = sentinel,
 		.previous = sentinel,
 	};
+	if (block_size == 0)
+		return NULL;
 	*v = (VirtualArray)
 	{
 		.sentinel = sentinel,
+		.block_size = block_size,
 		.total_capacity = 0,
 	};
 
@@ -85,7 +88,7 @@ enum status insert_block(VirtualArray* v, Block* position)
 	*new_block = (Block)
 	{
 		.head = array,
-		.size = CAPACITY,
+		.size = v->block_size,
 		.next = position->next,
 		.previous = position,
 	};
