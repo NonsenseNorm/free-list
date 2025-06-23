@@ -36,33 +36,6 @@ VirtualArray* create_virtual_array()
 	return v;
 }
 
-/*
-enum status dispose_virtual_array(VirtualArray* v)
-{
-	if (!v)
-	{
-		return REMOVE_FAILED;
-	}
-
-	Block* current = v->sentinel->next;
-	while (current != v->sentinel)
-	{
-		Block* next_block = current->next;
-		if (remove_block(v, current) != SUCCEED)
-		{
-			// エラーハンドリングが必要であればここに記述
-			// 例えば、部分的に解放された状態で関数を終了するか、エラーを返すか
-			return REMOVE_FAILED;
-		}
-		current = next_block;
-	}
-
-	free(v->sentinel);
-	free(v);
-	return SUCCEED;
-}
-*/
-
 byte* virtual_array(VirtualArray* v, size_t i)
 {
 	if (!v)
@@ -91,6 +64,7 @@ byte* virtual_array(VirtualArray* v, size_t i)
 	}
 	return NULL;
 }
+//上の関数自分が書いたvector.c内部のget_elementと比較すること,自分の何が悪かったのか
 
 //The new block will inserted right after the position.
 enum status insert_block(VirtualArray* v, Block* position)
