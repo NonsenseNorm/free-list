@@ -78,7 +78,7 @@ enum status insert_block(VirtualArray* v, Block* position)
 		return ALLOCATING_NEW_FAILED;
 	}
 
-	byte* array = malloc(CAPACITY);
+	byte* array = malloc(v->block_size);
 	if (!array)
 	{
 		free(new_block);
@@ -96,7 +96,7 @@ enum status insert_block(VirtualArray* v, Block* position)
 	position->next->previous = new_block;
 	position->next = new_block;
 
-	v->total_capacity += CAPACITY;
+	v->total_capacity += v->block_size;
 
 	return SUCCEED;
 }

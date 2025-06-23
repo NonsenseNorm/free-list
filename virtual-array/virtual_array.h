@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define CAPACITY 200
 typedef unsigned char byte;
 
 enum status
@@ -33,7 +32,7 @@ typedef struct
 	size_t total_capacity;
 } VirtualArray;
 
-VirtualArray* create_virtual_array();
+VirtualArray* create_virtual_array(size_t block_size);
 VirtualArray* dispose_virtual_array(VirtualArray* v);
 byte* virtual_array(VirtualArray* v, size_t i);
 
