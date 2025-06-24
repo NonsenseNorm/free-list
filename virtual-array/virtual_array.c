@@ -44,7 +44,7 @@ byte* virtual_array(VirtualArray* v, size_t i)
 	if (!v)
 		return NULL;
 
-	if (i >= v->total_capacity)
+	while (i >= v->total_capacity)
 	{
 		if (insert_block(v, v->sentinel) != SUCCEED)
 		{
@@ -67,7 +67,6 @@ byte* virtual_array(VirtualArray* v, size_t i)
 	}
 	return NULL;
 }
-//上の関数自分が書いたvector.c内部のget_elementと比較すること,自分の何が悪かったのか
 
 //The new block will inserted right after the position.
 enum status insert_block(VirtualArray* v, Block* position)

@@ -4,7 +4,8 @@ int	main()
 {
 	VirtualArray* v;
 
-	v = create_virtual_array(sizeof(char)*10);
+	/*sizeof(char)*10でばぐる*/
+	v = create_virtual_array(1);
 	if (v == NULL)
 		return 1;
 
