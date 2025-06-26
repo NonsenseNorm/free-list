@@ -1,10 +1,18 @@
 #include "virtual_array.h"
 
+typedef struct 
+{
+	int i;
+	char c;
+} t_data;
+
+
 int	main()
 {
 	VirtualArray* v;
 
-	/*sizeof(char)*10でばぐる*/
+	t_data data = {30, 's'};
+
 	v = create_virtual_array(2);
 	if (v == NULL)
 		return 1;
@@ -12,8 +20,9 @@ int	main()
 	int i = 0;
 	while (i < 100)
 	{
-		*((int *)virtual_array(v, i)) = i*10000;
-		printf("varray[%d]: %d\n", i, *((int *)virtual_array(v, i)));
+		*((t_data *)virtual_array(v, i)) = data;
+		printf("varray[%d]: %d\n", i, ((t_data *)virtual_array(v, i))->i);
+		printf("varray[%d]: %c\n", i, ((t_data *)virtual_array(v, i))->c);		
 		i++;
 	}
 
