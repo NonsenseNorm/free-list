@@ -2,11 +2,11 @@
 triple:          'arm64-apple-darwin'
 binary-path:     test
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _dispose_virtual_array, symObjAddr: 0x0, symBinAddr: 0x10000398C, symSize: 0x64 }
-  - { offsetInCU: 0x33, offset: 0x33, size: 0x8, addend: 0x0, symName: _dispose_virtual_array, symObjAddr: 0x0, symBinAddr: 0x10000398C, symSize: 0x64 }
-  - { offsetInCU: 0x5B, offset: 0x5B, size: 0x8, addend: 0x0, symName: _dealloc_blocks_except_sentinel, symObjAddr: 0x64, symBinAddr: 0x1000039F0, symSize: 0xEC }
-  - { offsetInCU: 0x26, offset: 0x17F, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003ADC, symSize: 0x124 }
-  - { offsetInCU: 0x70, offset: 0x1C9, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003ADC, symSize: 0x124 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _dispose_virtual_array, symObjAddr: 0x0, symBinAddr: 0x100003960, symSize: 0x64 }
+  - { offsetInCU: 0x33, offset: 0x33, size: 0x8, addend: 0x0, symName: _dispose_virtual_array, symObjAddr: 0x0, symBinAddr: 0x100003960, symSize: 0x64 }
+  - { offsetInCU: 0x5B, offset: 0x5B, size: 0x8, addend: 0x0, symName: _dealloc_blocks_except_sentinel, symObjAddr: 0x64, symBinAddr: 0x1000039C4, symSize: 0xEC }
+  - { offsetInCU: 0x26, offset: 0x17F, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003AB0, symSize: 0x150 }
+  - { offsetInCU: 0x70, offset: 0x1C9, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003AB0, symSize: 0x150 }
   - { offsetInCU: 0x26, offset: 0x2E3, size: 0x8, addend: 0x0, symName: _create_virtual_array, symObjAddr: 0x0, symBinAddr: 0x100003C00, symSize: 0x124 }
   - { offsetInCU: 0x6B, offset: 0x328, size: 0x8, addend: 0x0, symName: _create_virtual_array, symObjAddr: 0x0, symBinAddr: 0x100003C00, symSize: 0x124 }
   - { offsetInCU: 0xAF, offset: 0x36C, size: 0x8, addend: 0x0, symName: _insert_block, symObjAddr: 0x124, symBinAddr: 0x100003D24, symSize: 0x100 }

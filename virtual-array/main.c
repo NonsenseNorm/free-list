@@ -20,12 +20,18 @@ int	main()
 	int i = 0;
 	while (i < 100)
 	{
-		*((t_data *)virtual_array(v, i)) = data;
-		printf("varray[%d]: %d\n", i, ((t_data *)virtual_array(v, i))->x);
-		printf("varray[%d]: %c\n", i, ((t_data *)virtual_array(v, i))->c);		
+		*((t_data *)virtual_array(v, i)) = data;	
 		i++;
 	}
 
+	i = 0;
+	while (i < 100)
+	{
+		printf("varray[%d]: %d\n", i, ((t_data *)virtual_array(v, i))->x);
+		printf("varray[%d]: %c\n", i, ((t_data *)virtual_array(v, i))->c);	
+		i++;
+	}
+	
 	dispose_virtual_array(v);
 	return 0;
 }
