@@ -2,7 +2,7 @@
 
 typedef struct 
 {
-	int i;
+	int x;
 	char c;
 } t_data;
 
@@ -21,7 +21,7 @@ int	main()
 	while (i < 100)
 	{
 		*((t_data *)virtual_array(v, i)) = data;
-		printf("varray[%d]: %d\n", i, ((t_data *)virtual_array(v, i))->i);
+		printf("varray[%d]: %d\n", i, ((t_data *)virtual_array(v, i))->x);
 		printf("varray[%d]: %c\n", i, ((t_data *)virtual_array(v, i))->c);		
 		i++;
 	}
